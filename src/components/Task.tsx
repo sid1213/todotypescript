@@ -11,9 +11,11 @@ const Task: React.FC<thisprop> = ({ myTask,setTask}) => {
     
 const deleteTask = (e:React.MouseEvent<HTMLButtonElement>)=>{
     const eventTarget = e.target as HTMLElement;
-    console.log(eventTarget.parentElement?.getAttribute("data-key"));
-    localStorage.removeItem("Tasks"[0]);
+    const index =Number(eventTarget.parentElement?.getAttribute("data-key"));
+    // localStorage.removeItem("Tasks"[0]);
     console.log(myTask)
+    console.log(JSON.parse(localStorage.getItem("Tasks")|| "")[index])
+    
 
 }
 
