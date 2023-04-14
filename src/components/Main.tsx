@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React, { useEffect, useState }  from "react";
 import Items from "./Items";
 
 function Main() {
@@ -16,9 +16,9 @@ const setTask= (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) :vo
   console.log(inputValues);
 }
 const setArr=() =>{
-  setList([listArr,inputValues])
+  setList([...listArr,inputValues])
+  
 }
-
   return (
 
     <div className= "container-full p-5 text-center ">
@@ -49,6 +49,7 @@ const setArr=() =>{
           listArr.map((myval)=>{
             return <Items mytask={myval}/>
           })
+          
         }
       </div>
      
