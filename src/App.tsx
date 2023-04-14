@@ -1,9 +1,34 @@
-import './App.css';
-import Main from './components/Main';
+import React, {  useState } from "react";
+import Task from "./components/Task";
+import AddTodo from './components/AddTodo';
+import "./App.css";
+export interface InputState{
+  myTask:{
+    task:string,
+    description: string
+  }[]
+}
+const getTaskList=():[]=>{
+  let list = localStorage.getItem("Tasks");
+  if (list) {
+    return JSON.parse(localStorage.getItem("Tasks")|| "");
+  } else {
+    return [];
+  }
+}
 function App() {
+  const [myTask, setTask] = useState<InputState["myTask"]>(getTaskList());
+
   return (
-    <div className="bg-green-100 ">
-      <Main/>
+    <div className="container-full p-5 text-center ">
+      <div className="flex flex-col w-1/2 mx-auto items-center text-white">
+        <h3 className="text-2xl font-bold text-black">Todo App</h3>
+        <AddTodo myTask={myTask} setTask={setTask}/>
+        <Task myTask={myTask} setTask={setTask}/>
+      </div>
+      <div className="flex flex-col items-center mt-10">
+        
+      </div>
     </div>
   );
 }
