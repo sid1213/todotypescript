@@ -1,13 +1,15 @@
 import React from "react";
-import {InputState as props } from "../App"
+import {myListState as props } from "../App"
+import {myInputState as iprops } from "../App"
 
  interface thisprop{
     myTask: props["myTask"];
-    setTask:React.Dispatch<React.SetStateAction<props["myTask"]>>
+    setTask:React.Dispatch<React.SetStateAction<props["myTask"]>>;
+    input:iprops["myInput"];
+    setInput:React.Dispatch<React.SetStateAction<iprops["myInput"]>>;
   }
 
-
-const Task: React.FC<thisprop> = ({ myTask,setTask}) => {
+const Task: React.FC<thisprop> = ({ myTask,setTask,input,setInput }) => {
     
 const deleteTask = (e:React.MouseEvent<HTMLButtonElement>)=>{
     const eventTarget = e.target as HTMLElement;
@@ -16,16 +18,16 @@ const deleteTask = (e:React.MouseEvent<HTMLButtonElement>)=>{
     taskList.splice(index,1);
     localStorage.setItem("Tasks", JSON.stringify(taskList));
     setTask(taskList);
-    console.log(JSON.parse(localStorage.getItem("Tasks")|| ""))
 }
 const editTask = (e:React.MouseEvent<HTMLButtonElement>)=>{
     const eventTarget = e.target as HTMLElement;
     const index =Number(eventTarget.parentElement?.getAttribute("data-key"));
     const taskList=JSON.parse(localStorage.getItem("Tasks")|| "");
+    input.task=taskList[index].task;
+    input.description=taskList[index].description;
     taskList.splice(index,1);
     localStorage.setItem("Tasks", JSON.stringify(taskList));
     setTask(taskList);
-    console.log(JSON.parse(localStorage.getItem("Tasks")|| ""))
 }
 
   return (
@@ -40,7 +42,7 @@ const editTask = (e:React.MouseEvent<HTMLButtonElement>)=>{
                 <p className=" font-bold text-red-700">{tasks.task}</p>
                 <p className="text-xs">{tasks.description} </p>
             </div>
-            <button className="text-blue-700 hover:text-blue-500">Edit</button>
+            <button className="text-blue-700 hover:text-blue-500" onClick={editTask}>Edit</button>
             <button className="text-red-800 hover:text-red-500" onClick={deleteTask}>Delete</button>
 
         </li>

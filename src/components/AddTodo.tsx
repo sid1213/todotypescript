@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import {InputState as props} from "../App"
+import React, { useEffect, useState } from 'react';
+import {myListState as props} from "../App";
+import {myInputState as iprops} from "../App";
 
  interface myprop{
   myTask: props["myTask"];
-  setTask:React.Dispatch<React.SetStateAction<props["myTask"]>>
+  setTask:React.Dispatch<React.SetStateAction<props["myTask"]>>;
+  input:iprops["myInput"];
+  setInput:React.Dispatch<React.SetStateAction<iprops["myInput"]>>;
 }
 
-const  AddTodo:React.FC<myprop> = ( {myTask,setTask} )=> {
+const  AddTodo:React.FC<myprop> = ( {myTask,setTask,input,setInput} )=> {
 
-const [input,setInput]= useState({
-    task:"",
-    description:""
-})
+// const [input,setInput]= useState({
+//     task:"",
+//     description:""
+// })
 const getInput=(e : React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>):void=>{
     setInput({
         ...input,
@@ -59,4 +62,4 @@ useEffect(()=>{
   )
 }
 
-export default AddTodo
+export default AddTodo;
