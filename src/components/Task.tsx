@@ -12,11 +12,20 @@ const Task: React.FC<thisprop> = ({ myTask,setTask}) => {
 const deleteTask = (e:React.MouseEvent<HTMLButtonElement>)=>{
     const eventTarget = e.target as HTMLElement;
     const index =Number(eventTarget.parentElement?.getAttribute("data-key"));
-    // localStorage.removeItem("Tasks"[0]);
-    console.log(myTask)
-    console.log(JSON.parse(localStorage.getItem("Tasks")|| "")[index])
-    
-
+    const taskList=JSON.parse(localStorage.getItem("Tasks")|| "");
+    taskList.splice(index,1);
+    localStorage.setItem("Tasks", JSON.stringify(taskList));
+    setTask(taskList);
+    console.log(JSON.parse(localStorage.getItem("Tasks")|| ""))
+}
+const editTask = (e:React.MouseEvent<HTMLButtonElement>)=>{
+    const eventTarget = e.target as HTMLElement;
+    const index =Number(eventTarget.parentElement?.getAttribute("data-key"));
+    const taskList=JSON.parse(localStorage.getItem("Tasks")|| "");
+    taskList.splice(index,1);
+    localStorage.setItem("Tasks", JSON.stringify(taskList));
+    setTask(taskList);
+    console.log(JSON.parse(localStorage.getItem("Tasks")|| ""))
 }
 
   return (
