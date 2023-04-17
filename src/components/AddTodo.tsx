@@ -1,40 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import {myListState as props} from "../App";
-import {myInputState as iprops} from "../App";
 
- interface myprop{
-  myTask: props["myTask"];
-  setTask:React.Dispatch<React.SetStateAction<props["myTask"]>>;
-  input:iprops["myInput"];
-  setInput:React.Dispatch<React.SetStateAction<iprops["myInput"]>>;
-}
+import {TaskItem, addTodo} from "./todoSlice"
+import { useAppDispatch, useAppSelector } from '../hooks';
 
-const  AddTodo:React.FC<myprop> = ( {myTask,setTask,input,setInput} )=> {
 
-// const [input,setInput]= useState({
-//     task:"",
-//     description:""
-// })
-const getInput=(e : React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>):void=>{
+const  AddTodo = () => {
+
+  const [input,setInput]=useState<TaskItem>({ task:"",description:""});
+  const dispatch =useAppDispatch();
+  const data = useAppSelector((state)=>state.myTodo);
+  const getInput = (e :React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>):void=>{
     setInput({
-        ...input,
-        [e.target.name]:e.target.value
-    })
-}
-const insertTodo= ():void=>{
-    if(input.task==""||input.description==""){
-        alert("please add Both Input");
-        return
-    }
-    setTask([...myTask,{task:input.task,
-    description:input.description}]);
-    input.task="";
-    input.description="";
-
-}
-useEffect(()=>{
-    localStorage.setItem("Tasks", JSON.stringify(myTask));
-},[myTask]);
+      ...input,
+      [e.target.name]:e.target.value
+    });
+  }
+  const insertTodo = () =>{
+    dispatch(addTodo(input));
+    console.log(data)
+  }
   return (
     <div>
       <input
