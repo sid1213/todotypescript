@@ -7,7 +7,8 @@ interface TodoState {
 
 export interface TaskItem {
     task:string;
-    description:string 
+    description:string;
+    completed:boolean; 
 }
   const initialState:TodoState ={
     todos:[],
@@ -20,7 +21,7 @@ export interface TaskItem {
         addTodo:(state,action:PayloadAction<TaskItem> )=>{
               state.todos.push(action.payload);
               console.log(action.payload);
-            
+
         }
     }
     });

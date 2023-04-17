@@ -6,7 +6,7 @@ function Task() {
   return (
     <div>
       <ul className="w-full">
-        {data.map((ele: any, index: number) => {
+        {data.map((ele, index) => {
           return (
             <li
               className="bg-purple-300  my-2 border border-red-700 flex justify-between text-start gap-5 p-5 "
