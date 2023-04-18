@@ -121,6 +121,7 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
         <input
           type="checkbox"
           name="check"
+          checked={todos.completed}
           onChange={(e) => {
             checkTask(e, id);
           }}
