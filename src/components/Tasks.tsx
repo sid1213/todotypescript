@@ -26,7 +26,6 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
   });
   const [classShowHide, setClassShowHide] = useState<boolean>(false);
   const setEditedInputFun = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setEditedInput({ ...editedInput, [e.target.name]: e.target.value });
   };
   const setEditTask = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
@@ -58,13 +57,12 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
   const deleteTask = (id: number) => {
     dispatch(deleteTaskAction(id));
   };
-
   return (
     <li
       className={` ${
         todos.completed ? " bg-green-400" : "bg-purple-300"
       } my-2 border border-red-700 flex justify-between text-start gap-5 p-5 w-full rounded `}
-      key={id}
+      key={crypto.randomUUID()}
     >
       <div className="space-y-2 w-2/3 flex flex-col text-black  ">
         <div className={` space-y-2 ${classShowHide ? "block" : "hidden"} `}>
