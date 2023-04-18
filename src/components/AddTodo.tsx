@@ -3,7 +3,11 @@ import { TaskItem, addTodo } from "./todoSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
 
 const AddTodo = () => {
-  const [input, setInput] = useState<TaskItem>({ task: "", description: "" });
+  const [input, setInput] = useState<TaskItem>({
+    task: "",
+    description: "",
+    completed: false,
+  });
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.myTodo);
   const getInput = (
@@ -15,10 +19,15 @@ const AddTodo = () => {
     });
   };
   const insertTodo = () => {
-    dispatch(addTodo(input));
-    setInput({ task: "", description: "" });
-    console.log(data);
+    if (input.task === "" || input.description === "") {
+      alert("Please add Task title and Task description");
+    } else {
+      dispatch(addTodo(input));
+      setInput({ task: "", description: "", completed: false });
+      console.log(data);
+    }
   };
+
   return (
     <div>
       <input
