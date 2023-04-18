@@ -25,8 +25,14 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
     descriptioninput: "",
   });
   const [classShowHide, setClassShowHide] = useState<boolean>(false);
-  const setEditedInputFun = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditedInput({ ...editedInput, [e.target.name]: e.target.value });
+
+  const setEditedInputFun = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    console.log(e);
+    setEditedInput({
+      ...editedInput,
+      [e.target.name]: e.target.value,
+    });
+    // setEditedInput({ ...editedInput, [e.target.name]: e.target.value });
   };
   const setEditTask = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
     setEditedInput({
@@ -61,7 +67,6 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
       className={` ${
         todos.completed ? " bg-green-400" : "bg-purple-300"
       } my-2 border border-red-700 flex justify-between text-start gap-5 p-5 w-full rounded `}
-      key={crypto.randomUUID()}
     >
       <div className="space-y-2 w-2/3 flex flex-col text-black  ">
         <div className={` space-y-2 ${classShowHide ? "block" : "hidden"} `}>
@@ -70,9 +75,7 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
             className="border-2 p-1 w-full border-black block"
             placeholder="Edit task title"
             value={editedInput.taskInput}
-            onChange={(e) => {
-              setEditedInputFun(e);
-            }}
+            onChange={setEditedInputFun}
             name="taskInput"
           />
           <input
@@ -80,9 +83,7 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
             className="border-2 p-1 border-black block w-full"
             placeholder="Edit task description"
             value={editedInput.descriptioninput}
-            onChange={(e) => {
-              setEditedInputFun(e);
-            }}
+            onChange={setEditedInputFun}
             name="descriptioninput"
           />
           <button

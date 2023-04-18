@@ -34,10 +34,7 @@ else {
     initialState,
     reducers:{
         addTodo:(state,action:PayloadAction<TaskItem> )=>{
-              let taskBox=localStorage.getItem("Tasks");
-              if (taskBox){
-                state.todos=JSON.parse(localStorage.getItem("Tasks")|| "");
-              }
+              
               console.log(taskBox);
               state.todos.push(action.payload);
               localStorage.setItem("Tasks", JSON.stringify(state.todos));

@@ -7,7 +7,7 @@ function TaskList() {
     <div className="w-full">
       <ul>
         {data.map((todos, id) => {
-          return <Tasks todos={todos} id={id} key={id} />;
+          return <Tasks todos={todos} id={id} key={crypto.randomUUID()} />;
         })}
       </ul>
     </div>
