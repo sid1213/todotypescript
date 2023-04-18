@@ -1,7 +1,7 @@
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { AiFillEdit } from "react-icons/ai";
 import { ImBin } from "react-icons/im";
-import { deleteTaskAction, editTaskAction } from "./todoSlice";
+import { checkTaskAction, deleteTaskAction, editTaskAction } from "./todoSlice";
 function Task() {
   const data = useAppSelector((state) => state.myTodo.todos);
   const dispatch = useAppDispatch();
@@ -26,8 +26,15 @@ function Task() {
       })
     );
     elem.classList.replace("block", "hidden");
-    // elem.si.classList.replace("block", "hidden");
-    // elem.classList.replace("block", "hidden");
+  };
+  const checkTask = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+    console.log(e.currentTarget.checked);
+    dispatch(
+      checkTaskAction({
+        taskState: e.currentTarget.checked,
+        id,
+      })
+    );
   };
   const deleteTask = (id: number) => {
     dispatch(deleteTaskAction(id));
@@ -39,25 +46,17 @@ function Task() {
         {data.map((ele, id) => {
           return (
             <li
-              className="bg-purple-300  my-2 border border-red-700 flex justify-between text-start gap-5 p-5 w-full rounded "
+              className={` ${
+                ele.completed ? " bg-green-400" : "bg-purple-300"
+              } my-2 border border-red-700 flex justify-between text-start gap-5 p-5 w-full rounded `}
               key={id}
             >
               <div className="space-y-2 w-2/3 flex flex-col text-black  ">
                 <div className="space-y-2 hidden ">
-                  <input
-                    type="text"
-                    className="border-2 p-1 border-black "
-                    // value={editTest.task}
-                    // onChange={setEdit}
-                  />
-                  <input
-                    type="text"
-                    className="border-2 p-1 border-black "
-                    // value={editTest.description}
-                    // onChange={setEdit}
-                  />
+                  <input type="text" className="border-2 p-1 border-black " />
+                  <input type="text" className="border-2 p-1 border-black " />
                   <button
-                    className="button block bg-green-400 p-2 rounded border-1 border-red-600 text-xs"
+                    className="button block bg-yellow-400 p-2 rounded border-1 border-red-600 text-xs"
                     onClick={(e) => {
                       editTask(e, id);
                     }}
@@ -92,8 +91,9 @@ function Task() {
                 <input
                   type="checkbox"
                   name="check"
-                  id="checkbox"
-                  className="text-xl bg-slate-400"
+                  onChange={(e) => {
+                    checkTask(e, id);
+                  }}
                 />
               </div>
             </li>
