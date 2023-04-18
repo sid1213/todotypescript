@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { TaskItem, addTodo } from "./todoSlice";
-import { useAppDispatch, useAppSelector } from "../hooks";
+import { TaskItem, addTodo } from "../store/todoSlice";
+import { useAppDispatch } from "../hooks";
 
 const AddTodo = () => {
   const [input, setInput] = useState<TaskItem>({
@@ -9,7 +9,6 @@ const AddTodo = () => {
     completed: false,
   });
   const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.myTodo);
   const getInput = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {

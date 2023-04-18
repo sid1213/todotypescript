@@ -1,7 +1,11 @@
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { AiFillEdit } from "react-icons/ai";
 import { ImBin } from "react-icons/im";
-import { checkTaskAction, deleteTaskAction, editTaskAction } from "./todoSlice";
+import {
+  checkTaskAction,
+  deleteTaskAction,
+  editTaskAction,
+} from "../store/todoSlice";
 function Task() {
   const data = useAppSelector((state) => state.myTodo.todos);
   const dispatch = useAppDispatch();
@@ -53,10 +57,18 @@ function Task() {
             >
               <div className="space-y-2 w-2/3 flex flex-col text-black  ">
                 <div className="space-y-2 hidden ">
-                  <input type="text" className="border-2 p-1 border-black " />
-                  <input type="text" className="border-2 p-1 border-black " />
+                  <input
+                    type="text"
+                    className="border-2 p-1 w-full border-black block"
+                    placeholder="Edit task title"
+                  />
+                  <input
+                    type="text"
+                    className="border-2 p-1 border-black block w-full"
+                    placeholder="Edit task description"
+                  />
                   <button
-                    className="button block bg-yellow-400 p-2 rounded border-1 border-red-600 text-xs"
+                    className="button block w-fit bg-yellow-400 p-2 rounded border-1 border-red-600 text-xs"
                     onClick={(e) => {
                       editTask(e, id);
                     }}
