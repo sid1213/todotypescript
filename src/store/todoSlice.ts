@@ -17,8 +17,16 @@ export interface TaskItem {
     description:string;
     completed:boolean; 
 }
+let taskBox=localStorage.getItem("Tasks");
+let initialStateBox=[]
+if (taskBox){
+  initialStateBox=JSON.parse(localStorage.getItem("Tasks")|| "");
+}
+else {
+  initialStateBox=[]
+}
   const initialState:TodoState ={
-    todos:[],
+    todos:initialStateBox,
   }
 
   export const myTodoSlice= createSlice({
@@ -26,19 +34,26 @@ export interface TaskItem {
     initialState,
     reducers:{
         addTodo:(state,action:PayloadAction<TaskItem> )=>{
+              let taskBox=localStorage.getItem("Tasks");
+              if (taskBox){
+                state.todos=JSON.parse(localStorage.getItem("Tasks")|| "");
+              }
+              console.log(taskBox);
               state.todos.push(action.payload);
+              localStorage.setItem("Tasks", JSON.stringify(state.todos));
         },
         editTaskAction:(state,action:PayloadAction<NewValues> )=>{
           state.todos[action.payload.id].task=action.payload.editTask;
           state.todos[action.payload.id].description=action.payload.editDescription;
-
+          localStorage.setItem("Tasks", JSON.stringify(state.todos));
         },
         deleteTaskAction:(state,action:PayloadAction<number> )=>{
           state.todos.splice(action.payload,1);
+          localStorage.setItem("Tasks", JSON.stringify(state.todos));
         },
         checkTaskAction:(state,action:PayloadAction<CheckState> )=>{
           state.todos[action.payload.id].completed=action.payload.taskState;
-
+          localStorage.setItem("Tasks", JSON.stringify(state.todos));
         },
         
     }
