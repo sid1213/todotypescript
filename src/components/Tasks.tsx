@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { AiFillEdit } from "react-icons/ai";
 import { ImBin } from "react-icons/im";
@@ -13,31 +13,38 @@ interface ListPropState {
   todos: TaskItem;
   id: number;
 }
-
+interface editedInputState {
+  taskInput: string;
+  descriptioninput: string;
+}
 const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
   const data = useAppSelector((state) => state.myTodo.todos);
   const dispatch = useAppDispatch();
-
+  const [editedInput, setEditedInput] = useState<editedInputState>({
+    taskInput: "",
+    descriptioninput: "",
+  });
+  const [classShowHide, setClassShowHide] = useState<boolean>(false);
+  const setEditedInputFun = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setEditedInput({ ...editedInput, [e.target.name]: e.target.value });
+  };
   const setEditTask = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
-    let elem: any =
-      e.currentTarget.parentElement?.previousElementSibling?.children;
-    let childelem: any = elem[0].children;
-    childelem[0].value = data[id].task;
-    childelem[1].value = data[id].description;
-    elem[0].classList.replace("hidden", "block");
-    elem[1].classList.add("hidden");
+    setEditedInput({
+      taskInput: data[id].task,
+      descriptioninput: data[id].description,
+    });
+    setClassShowHide(true);
   };
   const editTask = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
-    let elem: any = e.currentTarget.parentElement;
-    elem?.nextElementSibling.classList.replace("hidden", "block");
     dispatch(
       editTaskAction({
-        editTask: elem.children[0].value,
-        editDescription: elem.children[1].value,
+        editTask: editedInput.taskInput,
+        editDescription: editedInput.descriptioninput,
         id,
       })
     );
-    elem.classList.replace("block", "hidden");
+    setClassShowHide(false);
   };
   const checkTask = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
     // console.log(e.currentTarget.checked);
@@ -60,16 +67,26 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
       key={id}
     >
       <div className="space-y-2 w-2/3 flex flex-col text-black  ">
-        <div className="space-y-2 hidden ">
+        <div className={` space-y-2 ${classShowHide ? "block" : "hidden"} `}>
           <input
             type="text"
             className="border-2 p-1 w-full border-black block"
             placeholder="Edit task title"
+            value={editedInput.taskInput}
+            onChange={(e) => {
+              setEditedInputFun(e);
+            }}
+            name="taskInput"
           />
           <input
             type="text"
             className="border-2 p-1 border-black block w-full"
             placeholder="Edit task description"
+            value={editedInput.descriptioninput}
+            onChange={(e) => {
+              setEditedInputFun(e);
+            }}
+            name="descriptioninput"
           />
           <button
             className="button block w-fit bg-yellow-400 p-2 rounded border-1 border-red-600 text-xs"
@@ -81,7 +98,7 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
           </button>
         </div>
 
-        <div>
+        <div className={`${classShowHide ? "hidden" : "block"}`}>
           <p className=" font-bold text-red-700 text-2xl">{todos.task}</p>
           <p className="text-xs">{todos.description}</p>
         </div>
