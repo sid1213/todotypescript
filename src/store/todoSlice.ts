@@ -1,6 +1,6 @@
 import {createSlice,PayloadAction} from "@reduxjs/toolkit";
 
-interface TodoState {
+export interface TodoState {
   todos:TaskItem[]
 }
 interface NewValues{
@@ -27,7 +27,6 @@ export interface TaskItem {
     reducers:{
         addTodo:(state,action:PayloadAction<TaskItem> )=>{
               state.todos.push(action.payload);
-              // console.log(action.payload);
         },
         editTaskAction:(state,action:PayloadAction<NewValues> )=>{
           state.todos[action.payload.id].task=action.payload.editTask;
@@ -44,6 +43,6 @@ export interface TaskItem {
         
     }
     });
-export const {addTodo,editTaskAction,deleteTaskAction,checkTaskAction}=myTodoSlice.actions
-export default myTodoSlice.reducer
+export const {addTodo,editTaskAction,deleteTaskAction,checkTaskAction}=myTodoSlice.actions;
+export default myTodoSlice.reducer;
   
