@@ -24,7 +24,7 @@ const AddTodo = () => {
     } else {
       dispatch(addTodo(input));
       setInput({ task: "", description: "", completed: false });
-      console.log(data);
+      // console.log(data);
     }
   };
 

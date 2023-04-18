@@ -27,7 +27,7 @@ export interface TaskItem {
     reducers:{
         addTodo:(state,action:PayloadAction<TaskItem> )=>{
               state.todos.push(action.payload);
-              console.log(action.payload);
+              // console.log(action.payload);
         },
         editTaskAction:(state,action:PayloadAction<NewValues> )=>{
           state.todos[action.payload.id].task=action.payload.editTask;

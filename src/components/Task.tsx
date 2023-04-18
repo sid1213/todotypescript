@@ -28,7 +28,7 @@ function Task() {
     elem.classList.replace("block", "hidden");
   };
   const checkTask = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-    console.log(e.currentTarget.checked);
+    // console.log(e.currentTarget.checked);
     dispatch(
       checkTaskAction({
         taskState: e.currentTarget.checked,
