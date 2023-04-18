@@ -46,7 +46,6 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
     setClassShowHide(false);
   };
   const checkTask = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
-    // console.log(e.currentTarget.checked);
     dispatch(
       checkTaskAction({
         taskState: e.currentTarget.checked,
