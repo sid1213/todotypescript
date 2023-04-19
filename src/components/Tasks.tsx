@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAppSelector, useAppDispatch } from "../hooks";
+import { useAppDispatch } from "../hooks";
 import { AiFillEdit } from "react-icons/ai";
 import { ImBin } from "react-icons/im";
 import {
@@ -10,20 +10,21 @@ import {
 } from "../store/todoSlice";
 
 interface ListPropState {
-  todos: TaskItem;
-  id: number;
+  singletask: TaskItem;
+  index: number;
 }
 interface editedInputState {
   taskInput: string;
   descriptioninput: string;
 }
-const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
-  const data = useAppSelector((state) => state.myTodo.todos);
+const Tasks: React.FC<ListPropState> = ({ singletask, index }) => {
   const dispatch = useAppDispatch();
+
   const [editedInput, setEditedInput] = useState<editedInputState>({
     taskInput: "",
     descriptioninput: "",
   });
+
   const [classShowHide, setClassShowHide] = useState<boolean>(false);
 
   const setEditedInputFun = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -34,38 +35,43 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
     });
     // setEditedInput({ ...editedInput, [e.target.name]: e.target.value });
   };
-  const setEditTask = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+
+  const setEditTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     setEditedInput({
-      taskInput: data[id].task,
-      descriptioninput: data[id].description,
+      taskInput: singletask.task,
+      descriptioninput: singletask.description,
     });
     setClassShowHide(true);
   };
-  const editTask = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+
+  const editTask = (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
     dispatch(
       editTaskAction({
         editTask: editedInput.taskInput,
         editDescription: editedInput.descriptioninput,
-        id,
+        index,
       })
     );
     setClassShowHide(false);
   };
-  const checkTask = (e: React.ChangeEvent<HTMLInputElement>, id: number) => {
+
+  const checkTask = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     dispatch(
       checkTaskAction({
         taskState: e.currentTarget.checked,
-        id,
+        index,
       })
     );
   };
-  const deleteTask = (id: number) => {
-    dispatch(deleteTaskAction(id));
+
+  const deleteTask = (index: number) => {
+    dispatch(deleteTaskAction(index));
   };
+
   return (
     <li
       className={` ${
-        todos.completed ? " bg-green-400" : "bg-[#e7f0fe]"
+        singletask.completed ? " bg-green-400" : "bg-[#e7f0fe]"
       } my-2 border-2 border-black flex justify-between text-start gap-5 p-5 w-full rounded `}
     >
       <div className="space-y-2 w-full flex flex-col text-black  ">
@@ -89,7 +95,7 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
           <button
             className="button block w-fit bg-yellow-400 p-2 rounded border-1 border-red-600 text-xs"
             onClick={(e) => {
-              editTask(e, id);
+              editTask(e, index);
             }}
           >
             Submit
@@ -97,8 +103,10 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
         </div>
 
         <div className={`${classShowHide ? "hidden" : "block"}`}>
-          <p className=" font-bold text-gray-800  text-2xl">{todos.task}</p>
-          <p className="text-xs">{todos.description}</p>
+          <p className=" font-bold text-gray-800  text-2xl">
+            {singletask.task}
+          </p>
+          <p className="text-xs">{singletask.description}</p>
         </div>
       </div>
 
@@ -108,7 +116,7 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
         <button
           className="text-blue-700 hover:text-blue-500 text-xl"
           onClick={(e) => {
-            setEditTask(e, id);
+            setEditTask(e);
           }}
         >
           <AiFillEdit />
@@ -116,7 +124,7 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
         <button
           className="text-red-800 hover:text-red-500 text-xl"
           onClick={() => {
-            deleteTask(id);
+            deleteTask(index);
           }}
         >
           <ImBin />
@@ -125,9 +133,9 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
           className="w-5"
           type="checkbox"
           name="check"
-          checked={todos.completed}
+          checked={singletask.completed}
           onChange={(e) => {
-            checkTask(e, id);
+            checkTask(e, index);
           }}
         />
       </div>

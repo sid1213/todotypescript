@@ -6,17 +6,18 @@ export interface TodoState {
 interface NewValues {
   editTask: string;
   editDescription: string;
-  id: number;
+  index: number;
 }
 interface CheckState {
   taskState: boolean;
-  id: number;
+  index: number;
 }
 export interface TaskItem {
   task: string;
   description: string;
   completed: boolean;
 }
+// const getTodoFromLocalStorage = () => {};
 let taskBox = localStorage.getItem("Tasks");
 let initialStateBox = [];
 if (taskBox) {
@@ -37,18 +38,21 @@ export const myTodoSlice = createSlice({
       state.todos.push(action.payload);
       localStorage.setItem("Tasks", JSON.stringify(state.todos));
     },
+
     editTaskAction: (state, action: PayloadAction<NewValues>) => {
-      state.todos[action.payload.id].task = action.payload.editTask;
-      state.todos[action.payload.id].description =
+      state.todos[action.payload.index].task = action.payload.editTask;
+      state.todos[action.payload.index].description =
         action.payload.editDescription;
       localStorage.setItem("Tasks", JSON.stringify(state.todos));
     },
+
     deleteTaskAction: (state, action: PayloadAction<number>) => {
       state.todos.splice(action.payload, 1);
       localStorage.setItem("Tasks", JSON.stringify(state.todos));
     },
+
     checkTaskAction: (state, action: PayloadAction<CheckState>) => {
-      state.todos[action.payload.id].completed = action.payload.taskState;
+      state.todos[action.payload.index].completed = action.payload.taskState;
       localStorage.setItem("Tasks", JSON.stringify(state.todos));
     },
   },
