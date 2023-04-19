@@ -3,20 +3,24 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface TodoState {
   todos: TaskItem[];
 }
+
 interface NewValues {
   editTask: string;
   editDescription: string;
   index: number;
 }
+
 interface CheckState {
   taskState: boolean;
   index: number;
 }
+
 export interface TaskItem {
   task: string;
   description: string;
   completed: boolean;
 }
+
 const getTodoFromLocalStorage = (): [] => {
   let taskBox = localStorage.getItem("Tasks");
   if (taskBox) {
@@ -25,6 +29,7 @@ const getTodoFromLocalStorage = (): [] => {
     return [];
   }
 };
+
 const setTodoOnLocalStorage = (state: TodoState) => {
   localStorage.setItem("Tasks", JSON.stringify(state.todos));
 };
