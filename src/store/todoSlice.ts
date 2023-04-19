@@ -25,7 +25,7 @@ export interface TaskItem {
 const getTodoFromLocalStorage = (): [] => {
   let taskBox = localStorage.getItem("Tasks");
   if (taskBox) {
-    return JSON.parse(localStorage.getItem("Tasks") || "");
+    return JSON.parse(taskBox || "");
   } else {
     return [];
   }
