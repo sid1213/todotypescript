@@ -65,10 +65,10 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
   return (
     <li
       className={` ${
-        todos.completed ? " bg-green-400" : "bg-purple-300"
-      } my-2 border border-red-700 flex justify-between text-start gap-5 p-5 w-full rounded `}
+        todos.completed ? " bg-green-400" : "bg-[#e7f0fe]"
+      } my-2 border-2 border-black flex justify-between text-start gap-5 p-5 w-full rounded `}
     >
-      <div className="space-y-2 w-2/3 flex flex-col text-black  ">
+      <div className="space-y-2 w-full flex flex-col text-black  ">
         <div className={` space-y-2 ${classShowHide ? "block" : "hidden"} `}>
           <input
             type="text"
@@ -97,12 +97,14 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
         </div>
 
         <div className={`${classShowHide ? "hidden" : "block"}`}>
-          <p className=" font-bold text-red-700 text-2xl">{todos.task}</p>
+          <p className=" font-bold text-gray-800  text-2xl">{todos.task}</p>
           <p className="text-xs">{todos.description}</p>
         </div>
       </div>
 
-      <div className="flex space-x-5 w-fit">
+      <div
+        className={`flex space-x-5 w-fit ${classShowHide ? "hidden" : "block"}`}
+      >
         <button
           className="text-blue-700 hover:text-blue-500 text-xl"
           onClick={(e) => {
@@ -112,7 +114,7 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
           <AiFillEdit />
         </button>
         <button
-          className="text-red-800 hover:text-red-500"
+          className="text-red-800 hover:text-red-500 text-xl"
           onClick={() => {
             deleteTask(id);
           }}
@@ -120,6 +122,7 @@ const Tasks: React.FC<ListPropState> = ({ todos, id }) => {
           <ImBin />
         </button>
         <input
+          className="w-5"
           type="checkbox"
           name="check"
           checked={todos.completed}

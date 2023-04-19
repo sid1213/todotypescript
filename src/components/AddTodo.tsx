@@ -28,24 +28,27 @@ const AddTodo = () => {
   };
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Enter Task title"
-        className="p-3 w-full border border-blue-700 rounded mt-2 bg-blue-950  placeholder:text-gray-300"
-        value={input.task}
-        onChange={getInput}
-        name="task"
-      />
-      <textarea
-        placeholder="Description"
-        className="p-3 border border-blue-700 rounded mt-2 bg-blue-950 w-full placeholder:text-gray-300"
-        value={input.description}
-        onChange={getInput}
-        name="description"
-      />
+    <div className=" flex sm:gap-2 gap-1 justify-center items-center w-full">
+      <div className="space-y-2">
+        <input
+          type="text"
+          placeholder="Enter Task title"
+          className="p-3 w-full border border-blue-700 rounded  bg-blue-950  placeholder:text-gray-300"
+          value={input.task}
+          onChange={getInput}
+          name="task"
+        />
+        <textarea
+          placeholder="Description"
+          className="p-3 border border-blue-700 rounded bg-blue-950 w-full placeholder:text-gray-300"
+          value={input.description}
+          onChange={getInput}
+          name="description"
+        />
+      </div>
+
       <button
-        className="bg-green-900 active:bg-green-700 mt-5 p-3 w-fit rounded "
+        className="bg-green-900 active:bg-green-700 text-xs h-fit mx-2  p-3 w-fit rounded "
         onClick={insertTodo}
       >
         ADD TODO
