@@ -7,12 +7,12 @@ export interface TodoState {
 interface NewValues {
   editTask: string;
   editDescription: string;
-  index: number;
+  id: string;
 }
 
 interface CheckState {
   taskState: boolean;
-  index: number;
+  id: string;
 }
 
 export interface TaskItem {
@@ -49,19 +49,28 @@ export const myTodoSlice = createSlice({
     },
 
     editTaskAction: (state, action: PayloadAction<NewValues>) => {
-      state.todos[action.payload.index].task = action.payload.editTask;
-      state.todos[action.payload.index].description =
-        action.payload.editDescription;
+      state.todos.forEach((elemnt) => {
+        if (elemnt.id === action.payload.id) {
+          elemnt.task = action.payload.editTask;
+          elemnt.description = action.payload.editDescription;
+        }
+      });
       setTodoOnLocalStorage(state);
     },
 
-    deleteTaskAction: (state, action: PayloadAction<number>) => {
-      state.todos.splice(action.payload, 1);
+    deleteTaskAction: (state, action: PayloadAction<string>) => {
+      state.todos = state.todos.filter((elemnt) => {
+        return elemnt.id !== action.payload;
+      });
       setTodoOnLocalStorage(state);
     },
 
     checkTaskAction: (state, action: PayloadAction<CheckState>) => {
-      state.todos[action.payload.index].completed = action.payload.taskState;
+      state.todos.forEach((elemnt) => {
+        if (elemnt.id === action.payload.id) {
+          elemnt.completed = action.payload.taskState;
+        }
+      });
       setTodoOnLocalStorage(state);
     },
   },

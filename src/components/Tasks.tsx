@@ -11,13 +11,12 @@ import {
 
 interface EachTaskPropState {
   singletask: TaskItem;
-  index: number;
 }
 interface editedInputState {
   taskInput: string;
   descriptioninput: string;
 }
-const Tasks: React.FC<EachTaskPropState> = ({ singletask, index }) => {
+const Tasks: React.FC<EachTaskPropState> = ({ singletask }) => {
   const dispatch = useAppDispatch();
 
   const [editedInput, setEditedInput] = useState<editedInputState>({
@@ -28,7 +27,6 @@ const Tasks: React.FC<EachTaskPropState> = ({ singletask, index }) => {
   const [classShowHide, setClassShowHide] = useState<boolean>(false);
 
   const setEditedInputFun = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(e);
     setEditedInput({
       ...editedInput,
       [e.target.name]: e.target.value,
@@ -44,28 +42,28 @@ const Tasks: React.FC<EachTaskPropState> = ({ singletask, index }) => {
     setClassShowHide(true);
   };
 
-  const editTask = (e: React.MouseEvent<HTMLButtonElement>, index: number) => {
+  const editTask = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
     dispatch(
       editTaskAction({
         editTask: editedInput.taskInput,
         editDescription: editedInput.descriptioninput,
-        index,
+        id,
       })
     );
     setClassShowHide(false);
   };
 
-  const checkTask = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const checkTask = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     dispatch(
       checkTaskAction({
         taskState: e.currentTarget.checked,
-        index,
+        id,
       })
     );
   };
 
-  const deleteTask = (index: number) => {
-    dispatch(deleteTaskAction(index));
+  const deleteTask = (id: string) => {
+    dispatch(deleteTaskAction(id));
   };
 
   return (
@@ -95,7 +93,7 @@ const Tasks: React.FC<EachTaskPropState> = ({ singletask, index }) => {
           <button
             className="button block w-fit bg-yellow-400 p-2 rounded border-1 border-red-600 text-xs"
             onClick={(e) => {
-              editTask(e, index);
+              editTask(e, singletask.id);
             }}
           >
             Submit
@@ -124,7 +122,7 @@ const Tasks: React.FC<EachTaskPropState> = ({ singletask, index }) => {
         <button
           className="text-red-800 hover:text-red-500 text-xl"
           onClick={() => {
-            deleteTask(index);
+            deleteTask(singletask.id);
           }}
         >
           <ImBin />
@@ -135,7 +133,7 @@ const Tasks: React.FC<EachTaskPropState> = ({ singletask, index }) => {
           name="check"
           checked={singletask.completed}
           onChange={(e) => {
-            checkTask(e, index);
+            checkTask(e, singletask.id);
           }}
         />
       </div>

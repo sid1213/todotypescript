@@ -5,10 +5,8 @@ function TaskList() {
   return (
     <div className="w-full">
       <ul>
-        {data.map((singletask, index) => {
-          return (
-            <Tasks singletask={singletask} index={index} key={singletask.id} />
-          );
+        {data.map((singletask) => {
+          return <Tasks singletask={singletask} key={singletask.id} />;
         })}
       </ul>
     </div>
