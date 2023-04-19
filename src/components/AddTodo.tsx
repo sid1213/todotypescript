@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { TaskItem, addTodo } from "../store/todoSlice";
 import { useAppDispatch } from "../hooks";
+import { v4 as randomUUID } from "uuid";
 
 const AddTodo = () => {
   const [input, setInput] = useState<TaskItem>({
     task: "",
     description: "",
     completed: false,
+    id: "",
   });
   const dispatch = useAppDispatch();
   const getInput = (
@@ -15,6 +17,7 @@ const AddTodo = () => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
+      id: randomUUID(),
     });
   };
   const insertTodo = () => {
@@ -22,8 +25,12 @@ const AddTodo = () => {
       alert("Please add Task title and Task description");
     } else {
       dispatch(addTodo(input));
-      setInput({ task: "", description: "", completed: false });
-      // console.log(data);
+      setInput({
+        task: "",
+        description: "",
+        completed: false,
+        id: "",
+      });
     }
   };
 

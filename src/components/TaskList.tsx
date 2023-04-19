@@ -1,6 +1,5 @@
 import { useAppSelector } from "../hooks";
 import Tasks from "./Tasks";
-
 function TaskList() {
   const data = useAppSelector((state) => state.myTodo.todos);
   return (
@@ -8,11 +7,7 @@ function TaskList() {
       <ul>
         {data.map((singletask, index) => {
           return (
-            <Tasks
-              singletask={singletask}
-              index={index}
-              key={crypto.randomUUID()}
-            />
+            <Tasks singletask={singletask} index={index} key={singletask.id} />
           );
         })}
       </ul>

@@ -9,7 +9,7 @@ import {
   editTaskAction,
 } from "../store/todoSlice";
 
-interface ListPropState {
+interface EachTaskPropState {
   singletask: TaskItem;
   index: number;
 }
@@ -17,7 +17,7 @@ interface editedInputState {
   taskInput: string;
   descriptioninput: string;
 }
-const Tasks: React.FC<ListPropState> = ({ singletask, index }) => {
+const Tasks: React.FC<EachTaskPropState> = ({ singletask, index }) => {
   const dispatch = useAppDispatch();
 
   const [editedInput, setEditedInput] = useState<editedInputState>({

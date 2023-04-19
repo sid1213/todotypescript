@@ -19,6 +19,7 @@ export interface TaskItem {
   task: string;
   description: string;
   completed: boolean;
+  id: string;
 }
 
 const getTodoFromLocalStorage = (): [] => {
